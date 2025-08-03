@@ -1,0 +1,139 @@
+import { Component } from '@angular/core';
+import { FlowableService } from 'src/app/servicios/flowable/flowable.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { Propuesta } from 'src/app/models/propuesta';
+import { ViewChild, AfterViewInit } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { VistasService } from 'src/app/servicios/vistas/vistas.service';
+import { catchError } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
+import { DateTime } from "luxon";
+import { MatDialog } from '@angular/material/dialog';
+import { MostrarPropuestaComponent } from '../../director/mostrar-propuesta/mostrar-propuesta.component';
+import { MetodosAsignarRevisoresComponent } from '../../metodos/metodos-asignar-revisores/metodos-asignar-revisores.component';
+
+@Component({
+  selector: 'app-listar-propuesta-por-asignar',
+  standalone: false,
+  templateUrl: './listar-propuesta-por-asignar.component.html',
+  styleUrl: './listar-propuesta-por-asignar.component.css'
+})
+export class ListarPropuestaPorAsignarComponent {
+
+  propuestas: any = [];
+
+
+  dataSource = new MatTableDataSource<Propuesta>([]);
+
+  @ViewChild('sort') sort!: MatSort;
+  @ViewChild('paginator') paginator!: MatPaginator;
+
+  constructor(
+    public flowableS: FlowableService,
+    public vistasS: VistasService,
+    public ventana: MatDialog, 
+  ) {
+  }
+
+  ngOnInit() {
+    this.VerTask();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+
+  }
+
+
+  VerTask() {
+    const idUsuario = Number(localStorage.getItem("idUsuario"));
+
+    this.flowableS.getTasksByAssignee(idUsuario).subscribe(res => {
+      if (res) {
+
+        console.log("ver propuestas", res)
+        const propuestaIds = res.map((task: any) => task.variables.propuestaId);
+        console.log("ver ides de propuestas: ", propuestaIds)
+
+        const observables = propuestaIds.map(id =>
+          this.vistasS.getPropuestaById(id).pipe(
+            catchError(err => {
+              console.error(`Error al obtener propuesta con ID ${id}:`, err);
+              return of(null);
+            })
+          )
+        );
+
+        forkJoin(observables).subscribe({
+          next: (dat) => {
+            const data = dat as any[];
+            this.propuestas = data
+              .filter(propuesta => propuesta !== null) 
+              .map((propuesta, index) => ({
+                ...propuesta, 
+                tareaId: res[index].id 
+              }));
+            this.propuestas.forEach(x => x.archivoEstudianteFecha = x.archivoEstudianteFecha.split(' ')[0])
+            this.dataSource.data = this.propuestas;
+            console.log('Propuestas con tareaId:', this.propuestas);
+          },
+          error: (err) => {
+            console.error('Error al obtener las propuestas', err);
+          }
+        });
+      }else{
+        this.dataSource.data = []
+        console.log("no hay task pendientes")
+
+      }
+    }, error => {
+      this.dataSource.data = []
+      console.log("no hay task pendientes")
+    })
+  }
+
+  VerPropuesta(propuesta: any) {
+    this.ventana.open(MostrarPropuestaComponent, {
+      width: 'auto', 
+      height: 'auto', data: { propuesta }
+    }).afterClosed()
+      .subscribe((confirmado: Boolean) => {
+      });
+  }
+
+
+
+  applyFilter(filterValue: Event) {
+    const valor = (filterValue.target as HTMLInputElement).value.trim().toLowerCase();
+
+    this.dataSource.filterPredicate = (data: Propuesta, filter: string) => {
+      return data.tema.toLowerCase().includes(filter);
+    };
+    this.dataSource.filter = valor;
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage(); 
+    }
+  }
+
+
+
+
+  AbrirVentanaAsignarRevisores(propuesta: any,) {
+    this.ventana.open(MetodosAsignarRevisoresComponent, {
+      data: { taskID: propuesta.tareaId, idProppuesta: propuesta.id }, width: '600px'
+    })
+      .afterClosed().subscribe(result => {
+        this.VerTask();
+
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+
+        });
+      })
+  }
+
+}

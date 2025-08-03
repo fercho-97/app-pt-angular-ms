@@ -1,0 +1,49 @@
+<div class="container" style="padding-top: 15px; padding-bottom: 25px;">
+
+    <div class="col-md" style="padding-bottom: 20px;">
+        <mat-card class="mat-elevation-z8" style="padding-bottom: 5px;">
+            <div class="d-flex bd-highlight" id="titulo">
+                <div class="w-100 bd-highlight">
+                    <span>DATOS DE USUARIO</span>
+                </div>
+            </div>
+            <br>
+            <mat-card-content>
+                <div class="text-center mb-3">
+                    <div class="icon-wrapper">
+                        <mat-icon>account_circle</mat-icon>
+                    </div>
+                </div>
+                <div class="text-center mb-4">
+                    <h4 class="fw-bold" style="font-size: 22px; color: rgb(29, 113, 168);">{{ nombreCompleto }}</h4>
+                </div>
+                 <br>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="mb-2" style="font-size: 17px;">
+                            <strong>Facultad:</strong> <span class="ms-2">{{ facultad }}</span>
+                        </div>
+                        <div class="mb-2" style="font-size: 17px;">
+                            <strong>Carrera:</strong> <span class="ms-2">{{ carrera }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="mb-2" style="font-size: 17px;">
+                            <strong>Correo:</strong> <span class="ms-2">{{ correo }}</span>
+                        </div>
+                        <div class="mb-2" style="font-size: 17px;">
+                            <strong>Rol:</strong> <span class="ms-2">{{ rol_usuario }}</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+             <br>
+            <mat-card-actions class="d-flex justify-content-end">
+                <button mat-raised-button color="primary" (click)="abrirDialogoCambio()">
+                    Cambiar contraseña
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        <br>
+    </div>
+</div>

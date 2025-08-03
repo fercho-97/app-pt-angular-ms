@@ -1,0 +1,110 @@
+<div class="container" style="padding-top: 25px; text-align: center;">
+    <div class="mat-elevation-z8" style="background: white;">
+        <form [formGroup]="registroForm">
+            <div class="grid-container">
+                <mat-form-field appearance="outline" [formGroup]="fechaRango">
+                    <mat-label>Rango de Fechas</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Fecha de inicio" formControlName="fechaInicio">
+                        <input matEndDate placeholder="Fecha de fin" formControlName="fechaFin">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                    <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                        matTooltip="Seleccionar rango de fechas.">
+                        help_outline
+                    </mat-icon>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="rol != 'direccion' && rol != 'coordinador'" appearance="outline">
+                    <mat-label>Carrera</mat-label>
+                    <mat-icon id="i-cursor" matSuffix matTooltipPosition="right" matTooltip="Seleccionar carrera.">
+                        help_outline
+                    </mat-icon>
+                    <mat-select formControlName="carrera">
+                        <mat-option *ngFor="let ca of carreras" [value]="ca.carrera">
+                            {{ ca.carrera }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Periodo</mat-label>
+                    <mat-icon id="i-cursor" matSuffix matTooltipPosition="right" matTooltip="Seleccionar periodo.">
+                        help_outline
+                    </mat-icon>
+                    <mat-select formControlName="periodo">
+                        <mat-option *ngFor="let periodo of periodos" [value]="periodo">
+                            {{ periodo }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+            </div>
+            <div style="position: relative; width: 100%; margin-top: 20px;">
+                <div style="display: flex; justify-content: center;">
+                    <button type="submit" class="btn btn-lg btn-block" (click)="reporteGeneral(registroForm.value)"
+                        [disabled]="!registroForm.valid">Reporte</button>
+                </div>
+
+                <button mat-icon-button color="warn" (click)="limpiarFiltros()" matTooltip="Resetear filtros"
+                    style="position: absolute; top: 0; right: 0;">
+                    <mat-icon>autorenew</mat-icon>
+                </button>
+            </div>
+            <br>
+        </form>
+        <div *ngIf="verReporte">
+            <strong>TIEMPOS POR TAREA</strong>
+            <br>
+            <div class="tabla-responsive">
+
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+                    <ng-container matColumnDef="tarea">
+                        <th mat-header-cell *matHeaderCellDef> Tarea </th>
+                        <td mat-cell *matCellDef="let element"> {{element.tarea}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="duracion">
+                        <th mat-header-cell *matHeaderCellDef> Duración (días) </th>
+                        <td mat-cell *matCellDef="let element"> {{element.duracion | number:'1.6-6'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+
+            <br>
+            <div class= "bar-chart-wrapper">
+                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'">
+                </canvas>
+            </div>
+            <br>
+            <div style="display: flex; gap: 16px;">
+                <mat-list style="flex: 1;">
+                    <mat-list-item style="min-height: 100px; ">
+                        <mat-icon matListIcon color="primary">speed</mat-icon>
+                        <div class="mat-list-text">
+                            <div matLine>Tarea más rápida: </div>
+                            <div matLine>{{ dataMaxMin['Tarea mas rapida'] }}</div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+
+                <mat-list style="flex: 1; ">
+                    <mat-list-item style="min-height: 100px; ">
+                        <mat-icon matListIcon color="warn">timer</mat-icon>
+                        <div class="mat-list-text">
+                            <div matLine>Tarea más lenta: </div>
+                            <div matLine>{{ dataMaxMin['Tarea mas lenta'] }}</div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </div>
+    </div>
+</div>

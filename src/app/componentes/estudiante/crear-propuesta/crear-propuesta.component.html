@@ -1,0 +1,105 @@
+<div id="resultados">
+    <span cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+        REGISTRAR PROPUESTA ESTUDIANTE
+    </span>
+    <mat-icon class="float-right" id="cerrar" (click)="CerrarRegistro()" matTooltip="Salir">
+        highlight_off
+    </mat-icon>
+</div>
+<!-- FORMULARIO COMPLETO -->
+<form [formGroup]="formulario">
+    <mat-card-content>
+        <div class="nota">
+            <span>
+                NOTA: Por favor llenar todos los campos obligatorios (*) del formulario para activar el botón
+                Guardar.
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Tipo:</mat-label>
+                    <mat-select [formControl]="tipoF" required>
+                        <mat-option *ngFor="let opcion of tipos" [value]="opcion">{{ opcion }}</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix
+                        matTooltip="Seleccionar el tipo de su plan de titulación.">help_outline</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Tema:</mat-label>
+                    <textarea matInput placeholder="Introduzca su tema." [formControl]="temaF" rows="5" maxlength="1500"
+                        required></textarea>
+                    <mat-icon matSuffix matTooltip="Tema de la propuesta.">help_outline</mat-icon>
+                    <mat-hint align="end">{{ temaF.value?.length || 0 }}/1500</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Segundo Estudiante:</mat-label>
+                    <input matInput type="email" [formControl]="estudianteDosF">
+                    <mat-error *ngIf="estudianteDosF.invalid">Ingrese un correo válido</mat-error>
+                    <mat-icon matSuffix matTooltip="Correo del segundo estudiante">help_outline</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Tercer Estudiante:</mat-label>
+                    <input matInput type="email" [formControl]="estudianteTresF">
+                    <mat-error *ngIf="estudianteTresF.invalid">Ingrese un correo válido</mat-error>
+                    <mat-icon matSuffix matTooltip="Correo del tercer estudiante">help_outline</mat-icon>
+                </mat-form-field>
+
+
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Categoría:</mat-label>
+                    <mat-select [formControl]="categoriaF" required>
+                        <mat-option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria
+                            }}</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix matTooltip="Seleccionar categoría.">help_outline</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Tutor:</mat-label>
+                    <mat-select [formControl]="docenteTutorF">
+                        <mat-option *ngFor="let tu of tutores" [value]="tu.idDocente">{{ tu.nombres + ' ' + tu.apellidos
+                            }}</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix matTooltip="Seleccionar su tutor.">help_outline</mat-icon>
+                </mat-form-field>
+
+
+                <div class="d-flex flex-wrap justify-content-around">
+                    <div class="separar">
+                        <form method="post" enctype="multipart/form-data">
+                            <input (change)="fileChange($event)" type="file" accept="application/pdf"
+                                [formControl]="archivoF" id="file">
+                            <label for="file" class="btn-2" (click)="LimpiarNombreArchivo()" matSuffix
+                                matTooltipPosition="right" matTooltip="Subir documento de la propuesta.">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span>Subir Documento</span>
+                                    <small style="font-size: 11px; color: #888;">Tamaño máximo: 1 MB</small>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="separar">
+                        <input type="text" readonly id="letras" placeholder="Ningún archivo seleccionado."
+                            class="form-control" style="width: 200px;" [formControl]="documentoF">
+                        <i *ngIf="HabilitarBtn" class="far fa-trash-alt" style="color:red; margin-left: 5px;"
+                            id="i-cursor" (click)="RetirarArchivo()" matSuffix matTooltipPosition="right"
+                            matTooltip="Eliminar archivo seleccionado.">
+                        </i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </mat-card-content>
+    <div style="text-align: center; margin-bottom: 2%;">
+        <button id="btn-raised" class="btn btn-sm" (click)="GuardarDatosPropuesta(formulario.value)"
+            [disabled]="!formulario.valid" type="submit">
+            Guardar
+        </button>
+    </div>
+</form>

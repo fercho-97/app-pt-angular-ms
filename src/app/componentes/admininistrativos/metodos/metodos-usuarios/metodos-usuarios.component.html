@@ -1,0 +1,44 @@
+<ng-container *ngIf="activar == false">
+    <div id="resultados">
+        <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+            DESACTIVAR USUARIO
+        </span>
+        <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+            highlight_off
+        </mat-icon>
+    </div>
+    <mat-card-content>
+        <div style="padding: 2%;">
+            <p>Se le recuerda que al desactivar este registro, el usuario no podrá ingresar en el sistema.
+            </p>
+            <p id="mensaje">¿ESTÁ SEGURO DE DESACTIVAR ESTE USUARIO?</p>
+        </div>
+    </mat-card-content>
+</ng-container>
+
+<ng-container *ngIf="activar == true">
+    <div id="resultados">
+        <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+            ACTIVAR USUARIO
+        </span>
+        <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+            highlight_off
+        </mat-icon>
+    </div>
+    <mat-card-content>
+        <div style="padding: 2%;">
+            <p>Se le recuerda que al activar este registro, el usuario podrá ingresar en el sistema.
+            </p>
+            <p id="mensaje">¿ESTÁ SEGURO DE ACTIVAR ESTE USUARIO?</p>
+        </div>
+    </mat-card-content>
+</ng-container>
+
+
+
+<div style="text-align: center; margin-bottom: 3%;">
+    <button mat-raised-button id="aceptar" class="btn-sm" color="primary" (click)="Confirmar()">
+        Aceptar
+    </button>
+  
+</div>

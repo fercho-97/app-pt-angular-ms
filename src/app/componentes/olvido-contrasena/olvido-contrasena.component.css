@@ -1,0 +1,50 @@
+.container {
+    position: relative;
+    z-index: 20;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#register-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/assets/imagenes/logo/fondoB.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: 10;
+}
+
+mat-card {
+    max-width: 400px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-card {
+    background: #e5eff7;
+    border-left: 6px solid rgb(29, 113, 168);
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

@@ -1,0 +1,33 @@
+mat-form-field.input-tables {
+  background: transparent;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  fill: none;
+  height: 65px;
+}
+td {
+  padding-top: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+table {
+  width: 100%;
+  font-size: 12px;
+}
+
+p {
+  font-size: x-small;
+}
+
+
+
+.align-left {
+  text-align: left;
+}
+
+
+.encabezado {
+  font-weight: bold;
+}

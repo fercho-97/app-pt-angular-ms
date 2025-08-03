@@ -1,0 +1,112 @@
+<div class="container" style="padding-top: 15px; padding-bottom: 25px;">
+
+    <div class="col-md" style="padding-bottom: 20px;">
+        <mat-card class="mat-elevation-z8" style="padding-bottom: 5px;">
+            <div class="d-flex bd-highlight" id="titulo">
+                <div class="w-100 bd-highlight">
+                    <span>PROPUESTA PLAN DE TESIS</span>
+                </div>
+                <div class="flex-shrink-1 bd-highlight" style="margin-right: 10px;">
+                    <button type="submit" class="btn btn-outline-light btn-sm" style="margin-top: -3px;"
+                        (click)="AbrirVentanaCrearPropuesta()">
+                        Añadir
+                    </button>
+                </div>
+            </div>
+            <mat-card-content>
+                <br>
+                <div *ngFor="let pe of propuestas" class="mb-4">
+
+                    <div class="card" [ngClass]="{
+                    'card-roja': pe.estadoValidacion === 'NO_VALIDADO' || 
+                    (pe.estadoValidacion === 'VALIDADO' && pe.estadoAprobacion === 'NO_APROBADO'),
+                    'card-verde': pe.estadoValidacion === 'NO_REVISADO' ||  pe.estadoValidacion === 'VALIDADO' && pe.estadoAprobacion === 'EN_REVISON' || 
+                    (pe.estadoValidacion === 'VALIDADO'&& pe.estadoAprobacion === 'APROBADO')
+                    }">
+
+                        <!-- Header -->
+                        <div class="card-header d-flex justify-content-between align-items-center bg-secondary">
+                            <strong style="color: white;">Propuesta de {{ pe.primerEstudiante }}</strong>
+                            <span class="badge"
+                                [ngClass]="{'bg-success': pe.estadoAprobacion === 'APROBADO', 'bg-danger': pe.estadoAprobacion === 'NO_APROBADO','bg-warning': pe.estadoAprobacion === 'EN_REVISON',}">{{
+                                pe.estadoAprobacion }}</span>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong>Estudiante 1:</strong> {{ pe.primerEstudiante }}</p>
+                                    <p><strong>Estudiante 2:</strong>
+                                        {{ pe.segundoEstudiante || 'Sin segundoestudiante.' }}
+                                    </p>
+                                    <p><strong>Estudiante 3:</strong>
+                                        {{ pe.tercerEstudiante || 'Sin tercerestudiante.'}}
+                                    </p>
+                                    <p><strong>Periodo:</strong> {{ pe.periodo }}</p>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Tema:</strong> {{ pe.tema }}</p>
+                                    <p><strong>Tutor:</strong> {{ pe.tutor }}</p>
+                                    <p><strong>Fecha de envío:</strong> {{ pe.archivoEstudianteFecha }}</p>
+                                    <p><strong>Documento Propuesta: </strong>
+                                        <a (click)="AbrirArchivo(pe.archivoEstudianteNombre)"
+                                            class="text-decoration-underline text-primary" style="cursor: pointer;">
+                                            Descargar documento
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong>Revisor 1:</strong> {{ pe.primerRevisor || 'Pendiente asignación' }}</p>
+                                    <p *ngIf="pe.archivoNombreRevisor1"><strong>Rúbrica Revisor 1: </strong>
+                                        <a (click)="AbrirArchivo(pe.archivoNombreRevisor1)"
+                                            class="text-decoration-underline text-primary" style="cursor: pointer;">
+                                            Descargar documento
+                                        </a>
+                                    </p>
+                                    <p><strong>Observación 1:</strong> {{ pe.observacion1 || 'Sin observaciones' }}
+                                    </p>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Revisor 2:</strong> {{ pe.segundoRevisor || 'Pendiente asignación' }}</p>
+                                    <p *ngIf="pe.archivoNombreRevisor2"><strong>Rúbrica Revisor 2: </strong>
+                                        <a (click)="AbrirArchivo(pe.archivoNombreRevisor2)"
+                                            class="text-decoration-underline text-primary" style="cursor: pointer;">
+                                            Descargar documento
+                                        </a>
+                                    </p>
+                                    <p><strong>Observación 2:</strong> {{ pe.observacion2 || 'Sin observaciones' }}
+                                    </p>
+                                    
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p><strong>Observación:</strong> {{ pe.observaciones || 'Sin observaciones' }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Validación Tema:</strong> {{ pe.estadoValidacion }}</p>
+                                </div>
+                            </div>
+                            <div class="text-end"
+                                *ngIf="pe.estadoValidacion === 'NO_REVISADO' || pe.estadoValidacion === 'VALIDADO'">
+                                <button mat-icon-button (click)="VerSeguimiento(pe)" matTooltip="Ver Seguimiento">
+                                    <mat-icon color="primary">track_changes</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <br>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+::ng-deep .mat-tab-label {
+  font-weight: bold;
+  color: rgb(29, 113, 168); 
+}

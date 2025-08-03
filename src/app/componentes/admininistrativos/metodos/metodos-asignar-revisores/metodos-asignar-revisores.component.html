@@ -1,0 +1,119 @@
+<div id="resultados">
+    <span cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+        ASIGNAR REVISORES
+    </span>
+    <mat-icon class="float-right" id="cerrar" (click)="CerrarRegistro()" matTooltip="Salir">
+        highlight_off
+    </mat-icon>
+</div>
+
+<form [formGroup]="formulario">
+    <mat-card-content>
+        <div class="nota">
+            <span>
+                NOTA: Por favor llenar todos los campos obligatorios (*) del formulario para activar el botón
+                Guardar.
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+
+
+                    <mat-form-field>
+                        <mat-label>Revisor 1:</mat-label>
+                        <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                            matTooltip="Seleccionar el Revisor 1.">
+                            help_outline
+                        </mat-icon>
+                        <mat-select [formControl]="revisor1F" required>
+                            <mat-option *ngFor="let tu of tutores" [value]="tu.idDocente">
+                                {{tu.nombres + ' ' +tu.apellidos}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    <mat-form-field>
+                        <mat-label>Revisor 2:</mat-label>
+                        <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                            matTooltip="Seleccionar el Revisor 2.">
+                            help_outline
+                        </mat-icon>
+                        <mat-select [formControl]="revisor2F" required>
+                            <mat-option *ngFor="let tu of tutores" [value]="tu.idDocente">
+                                {{tu.nombres + ' ' +tu.apellidos}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <div class="separar">
+                        <form method="post" enctype="multipart/form-data">
+                            <input (change)="fileChangeOficio($event)" type="file" accept="application/pdf"
+                                [formControl]="archivoOficioF" id="fileOficio">
+                            <label for="fileOficio" class="btn-2" (click)="LimpiarNombreArchivoOficio()" matSuffix
+                                matTooltipPosition="right" matTooltip="Subir Oficio.">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span>Subir Documento oficio</span>
+                                    <small style="font-size: 11px; color: #888;">Tamaño máximo: 1 MB</small>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="separar">
+                        <input type="text" readonly id="letras" placeholder="Ningún archivo seleccionado."
+                            class="form-control" style="width: 200px;" [formControl]="documentoOficioF">
+                        <i *ngIf="HabilitarBtnOficio" class="far fa-trash-alt" style="color:red; margin-left: 5px;"
+                            id="i-cursor" (click)="RetirarArchivoOficio()" matSuffix matTooltipPosition="right"
+                            matTooltip="Eliminar archivo seleccionado.">
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <div class="separar">
+                        <form method="post" enctype="multipart/form-data">
+                            <input (change)="fileChangeRubrica($event)" type="file" [formControl]="archivoRubricaF"
+                                id="fileRubrica">
+                            <label for="fileRubrica" class="btn-2" (click)="LimpiarNombreArchivoRubrica()" matSuffix
+                                matTooltipPosition="right" matTooltip="Subir Rubrica de la propuesta de titulación">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span>Subir Documento Rubrica</span>
+                                    <small style="font-size: 11px; color: #888;">Tamaño máximo: 1 MB</small>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="separar">
+                        <input type="text" readonly id="letras" placeholder="Ningún archivo seleccionado."
+                            class="form-control" style="width: 200px;" [formControl]="documentoRubricaF">
+                        <i *ngIf="HabilitarBtnRubrica" class="far fa-trash-alt" style="color:red; margin-left: 5px;"
+                            id="i-cursor" (click)="RetirarArchivoRubrica()" matSuffix matTooltipPosition="right"
+                            matTooltip="Eliminar archivo seleccionado.">
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </mat-card-content>
+    <div style="text-align: center; margin-bottom: 2%;">
+        <button id="btn-raised" class="btn btn-sm" (click)="GuardarRevisores(formulario.value)"
+            [disabled]="!formulario.valid" type="submit">
+            Guardar
+        </button>
+    </div>
+</form>

@@ -1,0 +1,44 @@
+#edit {
+    color: green;
+    margin-right: 5px;
+    cursor: pointer;
+    margin-left: 15px;
+    text-align: center;
+}
+
+#delete {
+    color: red;
+    cursor: pointer;
+    margin-left: 15px;
+    text-align: center;
+}
+
+#datosF {
+    font-weight: bold;
+    font-size: 15px;
+    padding-right: 5px;
+}
+
+.espacio {
+    padding: 0px 10px 0px 10px;
+    font-size: 13px;
+}
+
+.card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.card-roja {
+  background-color: #ffe6e6;
+  border-left: 5px solid #dc3545;
+}
+
+.card-verde {
+  background-color: #e6fff2;
+  border-left: 5px solid #28a745;
+}
+.badge {
+  font-size: 0.9rem;
+}

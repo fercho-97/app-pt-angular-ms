@@ -1,0 +1,102 @@
+@media (max-width: 992px) {
+    .home-inner {
+        padding-top: 100px;
+    }
+}
+
+mat-form-field {
+    width: 230px;
+}
+
+img {
+    width: 100%;
+}
+
+.pantalla {
+    margin: auto;
+}
+
+.btn-block {
+    background-color: rgb(23, 173, 9);
+    border-radius: 15px;
+    margin-left: 15px;
+    width: 230px;
+    color: white;
+}
+
+mat-card {
+    width: 350px;
+    margin: auto;
+    text-align: center;
+    border-style: groove;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+#home-section {
+    background: white;
+    min-height: 100vh;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.dark-overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    min-width: 100%;
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.home-inner {
+    padding: 45px 100px 15px 100px;
+}
+
+.caja1 {
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.caja2 {
+    margin-bottom: 10px;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: rgb(177, 173, 173);
+}
+
+.verde {
+    color: rgb(23, 173, 9);
+    margin-left: 5px;
+}
+
+.foo1 {
+    text-align: center;
+    padding: 10px;
+    height: 150px;
+    width: 165px;
+}
+
+#register-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/assets/imagenes/logo/fondoB.jpg');
+    background-repeat: no-repeat; /* evita la repetición */
+    background-size: cover;       /* ajusta al contenedor */
+    background-position: center;  /* centra la imagen */
+    z-index: 10;
+}
+
+.registro-formulario {
+    position: relative;
+    z-index: 20;
+    /* Por encima del fondo */
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}

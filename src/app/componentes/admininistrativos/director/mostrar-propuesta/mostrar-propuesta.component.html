@@ -1,0 +1,95 @@
+<ng-container>
+    <div id="resultados">
+
+        <span cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+            VER PROPUESTA
+        </span>
+        <mat-icon id="cerrar" (click)="CerrarRegistro()" matTooltip="Salir">
+            highlight_off
+        </mat-icon>
+    </div>
+    <mat-card-content>
+
+        <br>
+        <div class="card" [ngClass]="{
+                    'card-roja': verpropuesta.estadoValidacion === 'NO_VALIDADO' || 
+                    (verpropuesta.estadoValidacion === 'VALIDADO' && verpropuesta.estadoAprobacion === 'NO_APROBADO'),
+                    'card-verde': verpropuesta.estadoValidacion === 'NO_REVISADO' ||  verpropuesta.estadoValidacion === 'VALIDADO' && verpropuesta.estadoAprobacion === 'EN_REVISON' || 
+                    (verpropuesta.estadoValidacion === 'VALIDADO'&& verpropuesta.estadoAprobacion === 'APROBADO')
+                    }">
+
+            <div class="card-header d-flex justify-content-between align-items-center bg-secondary">
+                <strong style="color: white;">Propuesta de {{ verpropuesta.primerEstudiante }}</strong>
+                <span class="badge"
+                    [ngClass]="{'bg-success': verpropuesta.estadoAprobacion === 'APROBADO', 'bg-danger': verpropuesta.estadoAprobacion === 'NO_APROBADO','bg-warning': verpropuesta.estadoAprobacion === 'EN_REVISON',}">{{
+                    verpropuesta.estadoAprobacion }}</span>
+            </div>
+
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>Estudiante 1:</strong> {{ verpropuesta.primerEstudiante }}</p>
+                        <p><strong>Estudiante 2:</strong>
+                            {{ verpropuesta.segundoEstudiante || 'Sin segundoestudiante.' }}
+                        </p>
+                        <p><strong>Estudiante 3:</strong>
+                            {{ verpropuesta.tercerEstudiante || 'Sin tercerestudiante.'}}
+                        </p>
+                        <p><strong>Periodo:</strong> {{ verpropuesta.periodo }}</p>
+
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Tema:</strong> {{ verpropuesta.tema }}</p>
+                        <p><strong>Tutor:</strong> {{ verpropuesta.tutor }}</p>
+                        <p><strong>Fecha de envío:</strong> {{ verpropuesta.archivoEstudianteFecha }}</p>
+                        <p><strong>Documento Propuesta: </strong>
+                            <a (click)="AbrirArchivo(verpropuesta.archivoEstudianteNombre)"
+                                class="text-decoration-underline text-primary" style="cursor: pointer;">
+                                Descargar documento
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>Revisor 1:</strong> {{ verpropuesta.primerRevisor || 'Pendiente asignación' }}</p>
+                        <p *ngIf="verpropuesta.archivoNombreRevisor1"><strong>Rúbrica Revisor 1: </strong>
+                            <a (click)="AbrirArchivo(verpropuesta.archivoNombreRevisor1)"
+                                class="text-decoration-underline text-primary" style="cursor: pointer;">
+                                Descargar documento
+                            </a>
+                        </p>
+                        <p><strong>Observación 1:</strong> {{ verpropuesta.observacion1 || 'Sin observaciones' }}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Revisor 2:</strong> {{ verpropuesta.segundoRevisor || 'Pendiente asignación' }}</p>
+                        <p *ngIf="verpropuesta.archivoNombreRevisor2"><strong>Rúbrica Revisor 2: </strong>
+                            <a (click)="AbrirArchivo(verpropuesta.archivoNombreRevisor2)"
+                                class="text-decoration-underline text-primary" style="cursor: pointer;">
+                                Descargar documento
+                            </a>
+                        </p>
+
+                        <p><strong>Observación 2:</strong> {{ verpropuesta.observacion2 || 'Sin observaciones' }}
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>Observación:</strong> {{ verpropuesta.observaciones || 'Sin observaciones' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Validación Tema:</strong> {{ verpropuesta.estadoValidacion }}</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </mat-card-content>
+</ng-container>

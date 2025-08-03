@@ -1,0 +1,62 @@
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+
+
+$custom-primary: mat.m2-define-palette((
+  50:  #e2f1fa,
+  100: #b6d9f0,
+  200: #87c0e6,
+  300: #58a6db,
+  400: #3993d4,
+  500: #1d71a8, // color base (rgb(29, 113, 168))
+  600: #186694,
+  700: #145b80,
+  800: #104f6c,
+  900: #0c4459,
+  contrast: (
+    50:  black,
+    100: black,
+    200: black,
+    300: black,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+), 500); // color base: tono 500
+$my-primary-primary: $custom-primary;
+$my-primary-accent: mat.m2-define-palette(mat.$m2-blue-palette);
+
+$my-primary-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+
+$custom-typography: mat.m2-define-typography-config(
+  'Roboto, "Helvetica Neue", sans-serif',
+
+  $headline-1: mat.m2-define-typography-level(30px, 46px, 700),
+  $headline-2: mat.m2-define-typography-level(20px, 26px, 500),
+  $body-1: mat.m2-define-typography-level(12px, 16px, 500)
+);
+
+@include mat.checkbox-typography($custom-typography);
+
+@include mat.typography-hierarchy($custom-typography);
+@include mat.core-typography($custom-typography);
+
+$my-primary-theme: mat.m2-define-light-theme(
+  (color: (
+    primary: $my-primary-primary, 
+    accent: $my-primary-accent, 
+    warn: $my-primary-warn
+  ), 
+    typography: $custom-typography,
+  )
+);
+
+
+@include mat.all-component-themes($my-primary-theme);

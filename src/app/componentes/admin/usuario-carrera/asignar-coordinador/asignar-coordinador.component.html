@@ -1,0 +1,41 @@
+<ng-container>
+    <div id="resultados">
+        <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+            ASIGNAR COORDINADOR
+        </span>
+        <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+            highlight_off
+        </mat-icon>
+    </div>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <br>
+                <div class="d-flex flex-wrap justify-content-around">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Coordinador:</mat-label>
+                        <mat-icon id="i-cursor" matSuffix matTooltipPosition="right" matTooltip="Seleccionar el coordinador.">
+                            help_outline
+                        </mat-icon>
+                        <mat-select [formControl]="docenteF" required>
+                            <mat-option *ngFor="let tu of tutores" [value]="tu.idUsuario">
+                                {{tu.nombres + ' ' +tu.apellidos}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding: 2%;">
+            <p id="mensaje">¿ESTÁ SEGURO DE ASIGNAR ESTE COORDINADOR?</p>
+        </div>
+    </mat-card-content>
+</ng-container>
+<div style="text-align: center; margin-bottom: 3%;">
+    <button mat-raised-button id="aceptar" class="btn-sm" color="primary" (click)="AsignarCoordinador(formulario.value)"
+        [disabled]="!formulario.valid" type="submit">
+        Aceptar
+    </button>
+
+</div>

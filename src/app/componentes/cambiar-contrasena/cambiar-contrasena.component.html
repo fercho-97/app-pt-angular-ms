@@ -1,0 +1,40 @@
+<div class="container">
+    <mat-card class="success-card">
+        <mat-card-header>
+            <mat-card-title>Cambiar Contraseña</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <br>
+            <p>Por favor, ingresa tu contraseña actual y la nueva contraseña que deseas establecer.
+                <b>Defina su contraseña:.</b>
+            </p>
+            <form [formGroup]="formulario">
+
+                <mat-form-field style="align-items: center;">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [formControl]="password" required>
+                </mat-form-field>
+
+                <mat-form-field style="align-items: center;">
+                    <mat-label>Nueva Contraseña</mat-label>
+                    <input matInput [formControl]="newPassword" required>
+                </mat-form-field>
+
+                <mat-form-field style="align-items: center;">
+                    <mat-label>Confirmar Nueva Contraseña</mat-label>
+                    <input matInput [formControl]="confirmNewPassword" required
+                        (input)="verificarConfirmacion(confirmNewPassword)">
+                    <mat-error>
+                        Las contraseñas no coinciden
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="!formulario.valid"
+                (click)="CambiarContrasenia(formulario)">
+                Guardar Contraseña
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  mat-card {
+    max-width: 400px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .success-card {
+    background: #e8f5e9;
+    border-left: 6px solid #4caf50;
+  }
+  
+  .error-card {
+    background: #ffebee;
+    border-left: 6px solid #f44336;
+  }
+  
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Asegurar alineación vertical */
+  }
+
+  mat-card-header {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;     /* Centrar verticalmente */
+    text-align: center;      /* Asegurar que el texto esté centrado */
+  }

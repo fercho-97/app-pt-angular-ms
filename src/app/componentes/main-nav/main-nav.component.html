@@ -1,0 +1,142 @@
+<mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav #drawer class="sidenav mat-elevation-z14  custom-sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
+        <div class="uno">
+            <img src="../../../assets/imagenes/logo/logo_compu_trasp.png" id="logo">
+        </div>
+
+        <mat-nav-list>
+            <a *ngIf="rol_usuario== 'estudiante'" mat-list-item [routerLink]="['/ingreso-propuesta']"
+                routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_">school </mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%; font-size: 120%; color: white;">Propuesta</p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'secretaria'" mat-list-item [routerLink]="['/activar-usuarios']"
+                routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">how_to_reg</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Activar Estudiante</p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'secretaria'" mat-list-item [routerLink]="['/listar-docentes']"
+                routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">manage_accounts</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Administrar Docente</p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'secretaria'" mat-list-item [routerLink]="['/listar-propuestas-por-asignar']"
+                routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">person_add</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%; font-size: 120%;  color: white;">Asignar Revisores
+                    <span class="badge" *ngIf="tareaIndividual > 0">{{ tareaIndividual }}</span>
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'direccion'" mat-list-item [routerLink]="['/listar-propuestas']"
+                routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_"> check_circle</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%; color: white;">Validar Propuesta
+                    <span class="badge" *ngIf="validacionTemaCount > 0">{{ validacionTemaCount }}</span>
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'direccion'" mat-list-item [routerLink]="['/listar-propuestas-por-notificar']"
+                routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">send</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%; font-size: 120%;  color: white;">Notificar Propuesta
+                    <span class="badge" *ngIf="designacionOrRechazoCount > 0">{{ designacionOrRechazoCount }}</span>
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'docente' || rol_usuario== 'coordinador'" mat-list-item
+                [routerLink]="['/listar-revisiones']" routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">assignment</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Revisión Propuestas
+                    <span class="badge" *ngIf="tareaIndividual > 0">{{ tareaIndividual }}</span>
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'ADMIN'" mat-list-item [routerLink]="['/listar-carreras']"
+                routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_">school</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Carreras
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'ADMIN'" mat-list-item [routerLink]="['/listar-usuarios-direccion']"
+                routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_">supervisor_account</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%; color: white;">Usuarios Dirección
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'ADMIN'" mat-list-item [routerLink]="['/listar-secretarias']"
+                routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_">support_agent</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Usuario Secretaria
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'direccion' || rol_usuario== 'coordinador'" mat-list-item
+                [routerLink]="['/listar-propuestas-generales']" routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_">article</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Propuestas Generales
+                </p>
+            </a>
+            <a *ngIf="rol_usuario== 'ADMIN'" mat-list-item [routerLink]="['/listar-propuestas-admin']"
+                routerLinkActive="active-link">
+                <mat-icon style="float: left;" id="icono-menu_">assignment</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%; font-size: 120%;  color: white;">Propuestas Generales
+                </p>
+            </a>
+            <a *ngIf="rol_usuario== 'docente' || rol_usuario== 'coordinador'" mat-list-item
+                [routerLink]="['/propuesta-de-tutor']" routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">assignment</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Tutorías
+                </p>
+            </a>
+
+            <a *ngIf="rol_usuario== 'direccion' || rol_usuario== 'coordinador' || rol_usuario== 'ADMIN'" mat-list-item
+                [routerLink]="['/reportes-direccion']" routerLinkActive="active-link" >
+                <mat-icon style="float: left;" id="icono-menu_">analytics</mat-icon>
+                <p style="float: left; margin-left: 5%; margin-top: 2%;  font-size: 120%;  color: white;">Reportes
+                </p>
+            </a>
+        </mat-nav-list>
+        <span style="position: absolute; bottom: 5%; left: 10%; font-size: 100%;  color: white;">
+            <strong>Usuario: {{nombreUsuario}}</strong>
+        </span>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="degradado">
+        <mat-toolbar id="titulo" class="mat-elevation-z4" >
+            <!-- Botón para móviles -->
+            <button mat-icon-button (click)="drawer.toggle()" class="menu-button">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="titulo-texto">SISTEMA
+                DE TITULACIÓN: PLAN DE TESIS</span>
+
+            <button mat-icon-button style="margin-left: auto;" [matMenuTriggerFor]="perfilMenu">
+                <mat-icon style="color: azure; font-size: 25px;">account_circle</mat-icon>
+            </button>
+
+            <mat-menu #perfilMenu="matMenu">
+                <button mat-menu-item (click)="verPerfil()">
+                    <mat-icon style="color: rgb(29, 113, 168);">person</mat-icon>
+                    <span>Ver Perfil</span>
+                </button>
+                <button mat-menu-item (click)="cerrarSesion()">
+                    <mat-icon style="color: rgb(29, 113, 168);">logout</mat-icon>
+                    <span>Cerrar sesión</span>
+                </button>
+            </mat-menu>
+        </mat-toolbar>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

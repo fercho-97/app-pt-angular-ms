@@ -1,0 +1,29 @@
+<div id="register-section"></div>
+<div class="container">
+    <mat-card class="success-card">
+        <mat-card-header>
+            <mat-card-title>Olvido su Contraseña</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Para restaurar su contraseña ingrese la dirección de correo electronico regitrado en su cuenta.
+                <b>Ingrese su dirección de correo.</b>
+            </p>
+            <form [formGroup]="formulario">
+                <mat-form-field>
+                    <mat-label>Correo</mat-label>
+                    <input matInput [formControl]="correo" required>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="!formulario.valid"
+                (click)="ValidarCorreoPassword(formulario)">Envíar</button>
+
+        </mat-card-actions>
+        <mat-card-actions>
+            <button [routerLink]="['/login']" mat-raised-button color="primary">Regresar</button>
+
+        </mat-card-actions>
+    </mat-card>
+    <app-footer></app-footer>
+</div>

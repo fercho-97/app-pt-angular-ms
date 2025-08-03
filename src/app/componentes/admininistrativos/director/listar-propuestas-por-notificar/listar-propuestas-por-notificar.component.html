@@ -1,0 +1,121 @@
+<div class="container" style="margin-bottom: 25px; padding-bottom: 10px; padding-top: 15px;">
+    <div class="row">
+        <div>
+            <div id="titulo">
+                <span>PROPUESTAS CALIFICADAS</span>
+            </div>
+            <mat-card class="example-card mat-elevation-z8">
+                <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1%;">
+
+                    <button mat-raised-button id="btn_listar_verde" *ngIf="lista_aprobados" (click)="ListarAprobados()"
+                        style="margin-bottom: 20px;" matSuffix matTooltipPosition="right"
+                        matTooltip="Mostrar la lista de propuestas aprobadas.">
+                        LISTAR APROBADAS
+                        <span class="badge" *ngIf="desinacionTutorCount > 0">{{ desinacionTutorCount }}</span>
+
+                    </button>
+                    <button mat-raised-button id="btn_listar_rojo" *ngIf="lista_no_aprobados" (click)="ListarNoAprobados()"
+                        style="margin-bottom: 20px;" matSuffix matTooltipPosition="right"
+                        matTooltip="Mostrar la lista de propuestas no aprobadas.">
+                        LISTAR NO APROBADAS
+                        <span class="badge" *ngIf="notificarRechazoCount > 0">{{ notificarRechazoCount }}</span>
+
+                    </button>
+                </div>
+            </mat-card>
+
+        </div>
+    </div>
+</div>
+
+<div class="container" style="padding-bottom: 50px; text-align: center;">
+    <div class="mat-elevation-z8" style="background: white;">
+        <div class="d-flex bd-highlight" id="titulo">
+            <div class="w-100 bd-highlight">
+                <div id="titulo" *ngIf="Hab_Deshabilitados">
+                    <span> LISTA DE PROPUESTAS NO APROBADAS
+                    </span>
+                </div>
+                <div id="titulo" *ngIf="tabla_aprobados">
+                    <span>LISTA DE PROPUESTAS APROBADAS</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding: 10px;">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Filtrar por Tema</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Buscar tema...">
+            </mat-form-field>
+        </div>
+        <div class="table-responsive">
+
+            <table mat-table [dataSource]="dataSource" matSort #sort="matSort" class="mat-elevation-z8 bordered-table"
+                style="width: 100%;">
+
+                <ng-container matColumnDef="tema">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tema</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tema }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="primerEstudiante">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 1</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.primerEstudiante }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="segundoEstudiante">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 2</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.segundoEstudiante }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="tercerEstudiante">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 3</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tercerEstudiante }}</td>
+                </ng-container>
+                <ng-container matColumnDef="tipo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tipo</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tipo }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="categoria">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Categoria</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.categoria }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="periodo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Periodo</th>
+                    <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.periodo }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="encabezado">Acciones</th>
+                    <td mat-cell *matCellDef="let propuesta">
+                        <button mat-icon-button *ngIf="tabla_aprobados &&  dataSource.data.length !=0" color="accent"
+                            matTooltip="Aprobar Propuesta" (click)="AbrirVentanaNotificarPropuesta(propuesta, true )">
+                            <mat-icon [ngStyle]="{ color: '#4CAF50' }">check_circle</mat-icon>
+                        </button>
+
+                        <button *ngIf="Hab_Deshabilitados && dataSource.data.length !=0 " mat-icon-button color="warn"
+                            matTooltip="Desaprobar Propuesta"
+                            (click)="AbrirVentanaNotificarPropuesta(propuesta, false )">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row
+                    *matHeaderRowDef="['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo', 'categoria','periodo', 'acciones']">
+                </tr>
+                <tr mat-row
+                    *matRowDef="let row; columns: ['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo','categoria','periodo', 'acciones'];">
+                </tr>
+            </table>
+            <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+        </div>
+
+
+    </div>
+
+
+</div>

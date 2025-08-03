@@ -1,0 +1,127 @@
+<div id="register-section"></div>
+
+<div class="container registro-formulario">
+    <div class="row">
+        <div class="col d-flex align-items-center justify-content-center">
+            <mat-card class="mat-elevation-z8">
+                <mat-icon id="cerrar-registro" (click)="CerrarRegistro()" matTooltip="Salir">
+                    highlight_off
+                </mat-icon>
+
+                <mat-card-title class="text-center">
+
+                    <img class="foo1 align-self-center" alt="Logo Computacion"
+                        src="../../assets/imagenes/logo/logo_computacion.jpg" />
+                    <br>
+                    Registro de Usuario
+                </mat-card-title>
+                <br>
+                <form [formGroup]="registroForm">
+                    <div class="grid-container">
+                        <mat-form-field>
+                            <mat-label>Primer Nombre</mat-label>
+                            <input matInput [formControl]="primerNombre" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Segundo Nombre</mat-label>
+                            <input matInput [formControl]="segundoNombre">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Primer Apellido</mat-label>
+                            <input matInput [formControl]="primerApellido" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Segundo Apellido</mat-label>
+                            <input matInput [formControl]="segundoApellido">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Cédula</mat-label>
+                            <input matInput type="text" placeholder="1724157688" maxlength="10" [formControl]="cedula"
+                                required (keypress)="IngresarSoloNumeros($event)" required
+                                (input)="ValidarCedula(cedula) ">
+                            <mat-error *ngIf="!cedulaValida">
+                                <mat-icon>error</mat-icon> Cédula incorrecta
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Celular</mat-label>
+                            <input matInput type="text" placeholder="0998266401" maxlength="10" [formControl]="celular"
+                                (keypress)="IngresarSoloNumeros($event)" required>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Correo Electrónico</mat-label>
+                            <input matInput type="email" [formControl]="correo" required>
+                            <mat-error *ngIf="correo.invalid">Ingrese un correo válido</mat-error>
+                        </mat-form-field>
+
+
+                        <mat-form-field>
+                            <mat-label>Facultad</mat-label>
+                            <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                                matTooltip="Seleccionar su facultad.">
+                                help_outline
+                            </mat-icon>
+                            <mat-select [formControl]="idFacultad"
+                                (selectionChange)="onFacultadSeleccionada($event.value)">
+                                <mat-option *ngFor="let facultad of facultades" [value]="facultad.id">
+                                    {{ facultad.nombre }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Carrera</mat-label>
+                            <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                                matTooltip="Seleccionar su carrera.">
+                                help_outline
+                            </mat-icon>
+                            <mat-select formControlName="carrera">
+                                <mat-option *ngFor="let ca of carreras" [value]="ca.idCarrera">
+                                    {{ ca.carrera }}
+                                </mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+
+
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput [type]="hidePassword ? 'password' : 'text'" [formControl]="password"
+                                required>
+                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
+                        </mat-form-field>
+
+                        <mat-form-field >
+                            <mat-label>Confirmar Contraseña</mat-label>
+                            <input matInput [type]="hidePassword2 ? 'password' : 'text'" [formControl]="confirmPassword"
+                                required (input)="verificarConfirmacion(confirmPassword)">
+                            <button mat-icon-button matSuffix (click)="hidePassword2 = !hidePassword2">
+                                <mat-icon>{{ hidePassword2 ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
+                            <mat-error>
+                                Las contraseñas no coinciden
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <br>
+                    <div style="margin: auto;">
+                        <button type="submit" class="btn btn-lg btn-block"
+                            (click)="registrarUsuario(registroForm.value)"
+                            [disabled]="!registroForm.valid">Registrarse</button>
+                    </div>
+
+                </form>
+
+            </mat-card>
+        </div>
+    </div>
+    <br>
+    <br>
+    <app-footer></app-footer>
+
+</div>

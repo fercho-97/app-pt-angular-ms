@@ -1,0 +1,18 @@
+.icon-wrapper {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.icon-wrapper mat-icon {
+  font-size: 64px !important;
+  width: 64px !important;
+  height: 64px !important;
+  color: rgb(29, 113, 168);
+}
+

@@ -1,0 +1,150 @@
+<div id="resultados">
+    <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+        CALIFICACIÓN DE LA PROPUESTA
+    </span>
+    <mat-icon class="float-right" id="cerrar" (click)="CerrarRegistro()" matTooltip="Salir">
+        highlight_off
+    </mat-icon>
+</div>
+<mat-card-content>
+    <br>
+    <div style="text-align: center; font-size: 18px; font-weight: bold; color: rgb(52, 65, 84);">
+        <span>
+            DATOS DE LA PROPUESTA:
+        </span>
+    </div>
+    <br>
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md">
+
+                <div class="espacio d-flex justify-content-start">
+                    <label id="datosF">Tipo:</label>
+                    <label> {{verpropuesta.tipo}} </label>
+                </div>
+            </div>
+
+            <div class="col-md">
+
+                <div class="espacio d-flex justify-content-start">
+                    <label id="datosF">Categoria:</label>
+                    <label> {{verpropuesta.categoria}} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="espacio d-flex justify-content-start">
+                    <label id="datosF">Propuesta:</label>
+                    <a matSuffix matTooltipPosition="right" matTooltip="Dar click para abrir la propuesta."
+                        (click)="AbrirArchivo(verpropuesta.archivoEstudianteNombre)"
+                        class="text-decoration-underline text-primary" style="cursor: pointer;">
+                        Descargar documento
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</mat-card-content>
+
+
+<form [formGroup]="formulario">
+    <br>
+    <mat-card-content>
+        <div style="text-align: center; font-size: 18px; font-weight: bold; color: rgb(52, 65, 84);">
+            <span>
+                CALIFICACIÓN:
+            </span>
+        </div>
+        <br>
+        <div class="nota">
+            <span>
+                NOTA: Por favor llenar todos los campos obligatorios (*) del formulario para activar el botón
+                Guardar.
+            </span>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <mat-form-field>
+                        <mat-label>Nota:</mat-label>
+                        <input matInput type="number" placeholder="Nota sobre 20" [formControl]="notaF" required min="0"
+                            max="20" step="0.1">
+                        <mat-icon matSuffix matTooltipPosition="right" matTooltip="Ingresar la nota de la Propuesta">
+                            help_outline
+                        </mat-icon>
+                        <mat-error *ngIf="notaF.hasError('required')">
+                            La nota es obligatoria.
+                        </mat-error>
+                        <mat-error *ngIf="notaF.hasError('min') || notaF.hasError('max')">
+                            La nota debe estar entre 0 y 20 puntos.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Observaciones:</mat-label>
+                        <textarea matInput placeholder="Introduzca sus Observaciones." [formControl]="observacionesF"
+                            maxlength="2000" rows="5"></textarea>
+                        <mat-icon matSuffix matTooltipPosition="right" matTooltip="Observaciones de la propuesta.">
+                            help_outline
+                        </mat-icon>
+                        <mat-hint align="end">
+                            {{ observacionesF.value?.length || 0 }}/2000
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+
+                    <div class="separar">
+                        <form method="post" enctype="multipart/form-data">
+                            <input (change)="fileChangeRubrica($event)" type="file" accept="application/pdf"
+                                [formControl]="archivoRubricaF" id="fileRubrica">
+                            <label for="fileRubrica" class="btn-2" (click)="LimpiarNombreArchivoRubrica()" matSuffix
+                                matTooltipPosition="right" matTooltip="Subir Rubrica de la propuesta de titulación">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span>Subir Documento Rubrica</span>
+                                    <small style="font-size: 11px; color: #888;">Tamaño máximo: 1 MB</small>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="separar">
+                        <input type="text" readonly id="letras" placeholder="Ningún archivo seleccionado."
+                            class="form-control" style="width: 200px;" [formControl]="documentoRubricaF">
+                        <i *ngIf="HabilitarBtnRubrica" class="far fa-trash-alt" style="color:red; margin-left: 5px;"
+                            id="i-cursor" (click)="RetirarArchivoRubrica()" matSuffix matTooltipPosition="right"
+                            matTooltip="Eliminar archivo seleccionado.">
+                        </i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </mat-card-content>
+    <div style="text-align: center; margin-bottom: 2%;">
+        <button id="btn-raised" class="btn btn-sm" (click)="GuardarRevision(formulario.value)"
+            [disabled]="!formulario.valid" type="submit">
+            Guardar
+        </button>
+    </div>
+</form>

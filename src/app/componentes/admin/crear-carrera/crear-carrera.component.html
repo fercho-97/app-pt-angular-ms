@@ -1,0 +1,39 @@
+<div id="resultados">
+    <span cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+        REGISTRAR CARRERA
+    </span>
+    <mat-icon  id="cerrar" (click)="CerrarRegistro()" 
+        matTooltip="Salir">
+        highlight_off
+    </mat-icon>
+</div>
+<!-- FORMULARIO COMPLETO -->
+<form [formGroup]="registroForm">
+    <mat-card-content>
+        <div class="nota">
+            <span>
+                NOTA: Por favor llenar todos los campos obligatorios (*) del formulario para activar el botón
+                Guardar.
+            </span>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <mat-form-field style="width: 50%;">
+                        <mat-label>Nombre Carrera</mat-label>
+                        <input matInput [formControl]="carreraNombre" required>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+    </mat-card-content>
+    <div style="text-align: center; margin-bottom: 2%;">
+        <button id="btn-raised" class="btn btn-sm" (click)="registrarCarrera(registroForm.value)"
+            [disabled]="!registroForm.valid" type="submit">
+            Guardar
+        </button>
+    </div>
+</form>

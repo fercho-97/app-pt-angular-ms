@@ -1,0 +1,28 @@
+<div class="container-full">
+  <div class="welcome-container">
+    <img src="../../../assets/imagenes/logo/logo_computacion.jpg" id="logo">
+
+    <h1>¡Bienvenido, {{ userName }}!</h1>
+    <p class="role-message">{{ mensajeRol }}</p>
+
+    <button *ngIf="userRole=='estudiante'" mat-raised-button color="primary" routerLink="/ingreso-propuesta">
+      Propuesta
+    </button>
+    <button *ngIf="userRole=='docente'" mat-raised-button color="primary" routerLink="/listar-revisiones">
+      Revisión Propuestas
+    </button>
+    <button *ngIf="userRole=='coordinador'" mat-raised-button color="primary" routerLink="/listar-revisiones">
+      Revisión Propuestas
+    </button>
+    <button *ngIf="userRole=='direccion'" mat-raised-button color="primary" routerLink="/listar-propuestas">
+      Validar Propuesta
+    </button>
+    <button *ngIf="userRole=='secretaria'" mat-raised-button color="primary"
+      routerLink="/listar-propuestas-por-asignar">
+      Asignar Revisores
+    </button>
+    <button *ngIf="userRole=='ADMIN'" mat-raised-button color="primary" routerLink="/listar-carreras">
+      Carreras
+    </button>
+  </div>
+</div>

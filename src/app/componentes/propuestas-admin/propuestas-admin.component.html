@@ -1,0 +1,301 @@
+<div class="container" style="margin-bottom: 25px; padding-bottom: 10px; padding-top: 15px;">
+    <div class="row">
+        <div>
+            <div id="titulo">
+                <span>SELECCIONE LA CARRERA</span>
+            </div>
+            <mat-card class="example-card mat-elevation-z8">
+                <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1%;">
+                    <form [formGroup]="registroForm">
+                        <mat-form-field>
+                            <mat-label>Carrera</mat-label>
+                            <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                                matTooltip="Seleccionar su carrera.">
+                                help_outline
+                            </mat-icon>
+                            <mat-select formControlName="carrera" (selectionChange)="alCambiarCarrera()">
+                                <mat-option *ngFor="let ca of carreras" [value]="ca.carrera">
+                                    {{ ca.carrera }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </mat-card>
+
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-bottom: 25px; padding-bottom: 10px; padding-top: 15px;">
+    <div class="row">
+        <div>
+            <div id="titulo">
+                <span>PROPUESTAS</span>
+            </div>
+            <mat-card class="example-card mat-elevation-z8">
+                <div class="d-flex flex-wrap justify-content-around" style="margin-top: 1%;">
+                    <button mat-raised-button id="btn_listar" (click)="ListarNoRevisadas()" style="margin-bottom: 20px;"
+                        matSuffix matTooltipPosition="right"
+                        matTooltip="Mostrar tabla con lista de propuestas no revisadas.">
+                        LISTAR PROPUESTAS NO REVISADAS
+                    </button>
+                    <button mat-raised-button id="btn_listar_verde" (click)="ListarAprobados()" style="margin-bottom: 20px;"
+                        matSuffix matTooltipPosition="right" matTooltip="Mostrar tabla con lista de propuestas aprobadas.">
+                        LISTAR PROPUESTAS APROBADAS
+                    </button>
+
+                    <button mat-raised-button id="btn_listar_rojo" (click)="ListarNoAprobados()" style="margin-bottom: 20px;"
+                        matSuffix matTooltipPosition="right" matTooltip="Mostrar tabla con lista de propuestas no aprobadas.">
+                        LISTAR PROPUESTAS NO APROBADAS
+                    </button>
+                </div>
+            </mat-card>
+
+        </div>
+    </div>
+</div>
+<div *ngIf="ver_propuestas">
+    <div *ngIf="tabla_no_revisado" class="container" style="padding-top: 25px; text-align: center;">
+        <div class="mat-elevation-z8" style="background: white;">
+            <div class="row">
+                <div>
+                    <div id="titulo">
+                        <span>PROPUESTAS NO REVISADAS</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 10px;">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Filtrar por Tema</mat-label>
+                    <input matInput (keyup)="applyFilter_nr($event)" placeholder="Buscar tema...">
+                </mat-form-field>
+            </div>
+            <div class="table-responsive">
+
+                <table mat-table [dataSource]="dataSource_nv" matSort #sort="matSort"
+                    class="mat-elevation-z8 bordered-table" style="width: 100%;">
+
+                    <ng-container matColumnDef="tema">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tema</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tema }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="primerEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 1</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.primerEstudiante }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="segundoEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 2</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.segundoEstudiante }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tercerEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 3</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tercerEstudiante }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tipo</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tipo }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="categoria">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Categoria</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.categoria }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="periodo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Periodo</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.periodo }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="encabezado">Acciones
+                        </th>
+                        <td mat-cell *matCellDef="let propuesta">
+                            <button mat-icon-button color="primary" matTooltip="Ver propuesta"
+                                (click)="VerPropuesta(propuesta)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row
+                        *matHeaderRowDef="['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo', 'categoria','periodo', 'acciones']">
+                    </tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: ['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo','categoria','periodo', 'acciones'];">
+                    </tr>
+                </table>
+                <mat-paginator #paginator_nv [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="tabla_no_validado" class="container" style="padding-top: 25px; text-align: center;">
+        <div class="mat-elevation-z8" style="background: white;">
+            <div class="row">
+                <div>
+                    <div id="titulo">
+                        <span>PROPUESTAS NO VALIDADAS</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 10px;">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Filtrar por Tema</mat-label>
+                    <input matInput (keyup)="applyFilter_nr($event)" placeholder="Buscar tema...">
+                </mat-form-field>
+            </div>
+            <div class="table-responsive">
+
+                <table mat-table [dataSource]="dataSource_nv" matSort #sort_nv="matSort"
+                    class="mat-elevation-z8 bordered-table" style="width: 100%;">
+
+                    <ng-container matColumnDef="tema">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tema</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tema }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="primerEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 1</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.primerEstudiante }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="segundoEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 2</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.segundoEstudiante }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tercerEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 3</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tercerEstudiante }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tipo</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tipo }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="categoria">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Categoria</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.categoria }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="periodo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Periodo</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.periodo }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="encabezado">Acciones
+                        </th>
+                        <td mat-cell *matCellDef="let propuesta">
+                            <button mat-icon-button color="primary" matTooltip="Ver propuesta"
+                                (click)="VerPropuesta(propuesta)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row
+                        *matHeaderRowDef="['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo', 'categoria','periodo', 'acciones']">
+                    </tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: ['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo','categoria','periodo', 'acciones'];">
+                    </tr>
+                </table>
+                <mat-paginator #paginator_nv [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="tabla_validado" class="container" style="padding-top: 25px; text-align: center;">
+        <div class="mat-elevation-z8" style="background: white;">
+            <div class="row">
+                <div>
+                    <div id="titulo">
+                        <span>PROPUESTAS VALIDADAS</span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 10px;">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Filtrar por Tema</mat-label>
+                    <input matInput (keyup)="applyFilter_nr($event)" placeholder="Buscar tema...">
+                </mat-form-field>
+            </div>
+            <div class="table-responsive">
+
+                <table mat-table [dataSource]="dataSource_nv" matSort #sort_nv="matSort"
+                    class="mat-elevation-z8 bordered-table" style="width: 100%;">
+
+                    <ng-container matColumnDef="tema">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tema</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tema }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="primerEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 1</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.primerEstudiante }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="segundoEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 2</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.segundoEstudiante }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tercerEstudiante">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Estudiante 3</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tercerEstudiante }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Tipo</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.tipo }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="categoria">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Categoria</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.categoria }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="periodo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="encabezado">Periodo</th>
+                        <td mat-cell *matCellDef="let propuesta" class="align-left">{{ propuesta.periodo }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="encabezado">Acciones
+                        </th>
+                        <td mat-cell *matCellDef="let propuesta">
+                            <button mat-icon-button color="primary" matTooltip="Ver propuesta"
+                                (click)="VerPropuesta(propuesta)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row
+                        *matHeaderRowDef="['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo', 'categoria','periodo', 'acciones']">
+                    </tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: ['tema', 'primerEstudiante', 'segundoEstudiante', 'tercerEstudiante', 'tipo','categoria','periodo', 'acciones'];">
+                    </tr>
+                </table>
+                <mat-paginator #paginator_nv [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+            </div>
+        </div>
+    </div>
+
+</div>

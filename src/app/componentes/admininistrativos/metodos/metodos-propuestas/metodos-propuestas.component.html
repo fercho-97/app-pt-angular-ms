@@ -1,0 +1,89 @@
+<ng-container *ngIf="no_validar">
+    <div style="text-align: center; margin-bottom: 3%;">
+        <div id="resultados">
+            <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+                NO VALIDAR
+            </span>
+            <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+                highlight_off
+            </mat-icon>
+        </div>
+        <mat-card-content *ngIf="no_validar">
+            <div style="padding: 2%;">
+                <p>Se le recuerda que al no validar esta propuesta no podra aprobarla.
+                    <b>Defina la observación de esta acción.</b>
+                </p>
+                <form [formGroup]="formulario">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Observacion</mat-label>
+                        <textarea matInput placeholder="Introduzca sus Observaciones." [formControl]="observacionN"
+                            maxlength="2000" rows="5" required></textarea>
+                        <mat-hint align="end">
+                            {{ observacionN.value?.length || 0 }}/2000
+                        </mat-hint>
+                    </mat-form-field>
+                </form>
+
+                <p id="mensaje">¿ESTÁ SEGURO NO VALIDAR ESTA PROPUESTA?</p>
+            </div>
+        </mat-card-content>
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="validar">
+    <div style="text-align: center; margin-bottom: 3%;">
+        <div id="resultados">
+            <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+                VALIDAR
+            </span>
+            <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+                highlight_off
+            </mat-icon>
+        </div>
+        <mat-card-content *ngIf="no_validar==false">
+            <div style="padding: 2%;">
+                <p>Se le recuerda que al validar esta propuesta podra aprobarla.
+                    <b>Defina la observación de esta acción.</b>
+                </p>
+                <form [formGroup]="formulario">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Observacion</mat-label>
+                        <textarea matInput placeholder="Introduzca sus Observaciones." [formControl]="observacion"
+                            maxlength="2000" rows="5"></textarea>
+                        <mat-hint align="end">
+                            {{ observacionN.value?.length || 0 }}/2000
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Secretaria:</mat-label>
+                        <mat-icon id="i-cursor" matSuffix matTooltipPosition="right"
+                            matTooltip="Seleccionar la secretaria encargada de la gestión de esta propuesta.">
+                            help_outline
+                        </mat-icon>
+                        <mat-select [formControl]="secretaria" required>
+                            <mat-option *ngFor="let tu of secretarias" [value]="tu.idUsuario">
+                                {{tu.nombres + ' ' +tu.apellidos}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+                <p id="mensaje">¿ESTÁ SEGURO VALIDAR ESTA PROPUESTA?</p>
+            </div>
+        </mat-card-content>
+    </div>
+</ng-container>
+
+
+
+<div style="text-align: center; margin-bottom: 3%;">
+    <button *ngIf="no_validar" mat-raised-button id="aceptar" class="btn-sm" color="primary" (click)="Confirmar()"
+        [disabled]="!formularioN.valid" type="submit">
+        Aceptar
+    </button>
+    <button *ngIf="validar" mat-raised-button id="aceptar" class="btn-sm" color="primary" (click)="Confirmar()"
+        [disabled]="!formulario.valid" type="submit">
+        Aceptar
+    </button>
+</div>

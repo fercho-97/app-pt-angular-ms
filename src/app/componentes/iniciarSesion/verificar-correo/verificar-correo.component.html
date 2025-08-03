@@ -1,0 +1,33 @@
+<div class="container"  *ngIf="verificado">
+  <mat-card class="success-card">
+    <mat-card-header>
+      <mat-icon class="icon" style="color:#4caf50;" >check_circle</mat-icon>
+      <mat-card-title>¡Correo Verificado!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Tu correo ha sido verificado exitosamente. Ahora puedes acceder a tu cuenta.</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" routerLink="/login">Ir a Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+<div class="container" *ngIf="!verificado" >
+  <mat-card class="error-card">
+    <mat-card-header>
+      <mat-icon class="icon" color="warn">error</mat-icon>
+      <mat-card-title>No se pudo verificar el correo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Ocurrió un problema al verificar tu correo. Por favor, intenta registrarte de nuevo.</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="warn" routerLink="/registro-usuario">Registrarse de Nuevo</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+<app-footer></app-footer>

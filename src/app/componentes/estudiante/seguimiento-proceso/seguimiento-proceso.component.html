@@ -1,0 +1,17 @@
+<div id="resultados1">
+    <span >
+        SEGUIMIENTO
+    </span>
+    <mat-icon class="float-right" id="cerrar1" (click)="CerrarRegistro()" 
+        matTooltip="Salir">
+        highlight_off
+    </mat-icon>
+</div>
+<mat-card-content>
+    <div class="container">
+        <div #zoomArea style="width: 900px; height: 500px;">
+            <img [src]="imageUrl" alt="Diagrama BPMN" style="max-width: none;" />
+        </div>
+
+    </div>
+</mat-card-content>

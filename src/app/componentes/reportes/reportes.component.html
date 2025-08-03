@@ -1,0 +1,27 @@
+<div class="container" style="padding-top: 25px; text-align: center;">
+    <div class="mat-elevation-z8" style="background: white;">
+
+        <div class="row">
+            <div>
+                <div id="titulo">
+                    <span> REPORTES</span>
+                </div>
+
+
+            </div>
+        </div>
+
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)" mat-stretch-tabs>
+            <mat-tab label="Duración de Tareas por Rol"></mat-tab>
+            <mat-tab label="Estado de Propuestas por Tutor"></mat-tab>
+            <mat-tab label="Resumen de Estado de Propuestas"></mat-tab>
+            <mat-tab label="Propuestas Revisadas Por Cada Revisor"></mat-tab>
+            <mat-tab label="General"></mat-tab>
+
+        </mat-tab-group>
+        <div class="container" style="padding-top: 20px;">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</div>

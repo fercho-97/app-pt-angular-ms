@@ -1,0 +1,146 @@
+<ng-container *ngIf="aprobar == false">
+    <div id="resultados">
+        <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+            NEGAR PROPUESTA
+        </span>
+        <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+            highlight_off
+        </mat-icon>
+    </div>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Observaciones:</mat-label>
+                        <textarea matInput placeholder="Introduzca sus Observaciones." [formControl]="observacionesFN"
+                            rows="5"></textarea>
+                        <mat-icon matSuffix matTooltipPosition="right" matTooltip="Observaciones de la propuesta.">
+                            help_outline
+                        </mat-icon>
+                        <mat-hint align="end">
+                            {{ observacionesFN.value?.length || 0 }}/2000
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div style="padding: 2%;">
+            <p id="mensaje">¿ESTÁ SEGURO DE NEGAR ESTA PROPUESTA?</p>
+        </div>
+
+    </mat-card-content>
+</ng-container>
+<div *ngIf="aprobar == false" style="text-align: center; margin-bottom: 3%;">
+    <button mat-raised-button id="aceptar" class="btn-sm" color="primary" (click)="NegarPropuesta(formularioN.value)"
+        [disabled]="!formularioN.valid" type="submit">
+        Aceptar
+    </button>
+</div>
+
+<ng-container *ngIf="aprobar == true">
+    <div id="resultados">
+        <span cdkDrag cdkDragRootElement=".cdk-overlay-pane" id="mover">
+            APROBAR PROPUESTA
+        </span>
+        <mat-icon id="cerrar" (click)="CerrarVentana()" matTooltip="Salir">
+            highlight_off
+        </mat-icon>
+    </div>
+    <mat-card-content>
+        <br>
+        <div style="text-align: center; font-size: 18px; font-weight: bold; color: rgb(52, 65, 84);">
+            <span>
+                DATOS DE LA PROPUESTA:
+            </span>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+
+                    <div class="espacio d-flex justify-content-start">
+                        <label id="datosF">Tipo:</label>
+                        <label> {{datos.propuesta.tipo}} </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </mat-card-content>
+    <mat-card-content>
+        <div style="text-align: center; font-size: 18px; font-weight: bold; color: rgb(52, 65, 84);">
+            <span>
+                NOTIFICACIÓN:
+            </span>
+        </div>
+        <br>
+        <div class="nota">
+            <span>
+                NOTA: Por favor llenar todos los campos obligatorios (*) del formulario para activar el botón
+                Guardar.
+            </span>      
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Tutor:</mat-label>
+                        <mat-icon id="i-cursor" matSuffix matTooltipPosition="right" matTooltip="Seleccionar su tutor.">
+                            help_outline
+                        </mat-icon>
+                        <mat-select [formControl]="docenteTutorF" required>
+                            <mat-option *ngFor="let tu of tutores" [value]="tu.idDocente">
+                                {{tu.nombres + ' ' +tu.apellidos}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div class="d-flex flex-wrap justify-content-around">
+
+                    <div class="separar">
+                        <form method="post" enctype="multipart/form-data">
+                            <input (change)="fileChangeRubrica($event)" type="file" [formControl]="archivoRubricaF"
+                                id="fileRubrica">
+                            <label for="fileRubrica" class="btn-2" (click)="LimpiarNombreArchivoRubrica()" matSuffix
+                                matTooltipPosition="right" matTooltip="Subir oficio de designación de tutor">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span>Subir Documento Oficio</span>
+                                    <small style="font-size: 11px; color: #888;">Tamaño máximo: 1 MB</small>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
+                    <div class="separar">
+                        <input type="text" readonly id="letras" placeholder="Ningún archivo seleccionado."
+                            class="form-control" style="width: 200px;" [formControl]="documentoRubricaF">
+                        <i *ngIf="HabilitarBtnRubrica" class="far fa-trash-alt" style="color:red; margin-left: 5px;"
+                            id="i-cursor" (click)="RetirarArchivoRubrica()" matSuffix matTooltipPosition="right"
+                            matTooltip="Eliminar archivo seleccionado.">
+                        </i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div style="padding: 2%;">
+            <p id="mensaje">¿ESTÁ SEGURO DE APROBAR ESTA PROPUESTA?</p>
+        </div>
+    </mat-card-content>
+</ng-container>
+
+<div *ngIf="aprobar == true" style="text-align: center; margin-bottom: 3%;">
+    <button mat-raised-button id="aceptar" class="btn-sm" color="primary" (click)="AprobarPropuesta(formulario.value)"
+        [disabled]="!formulario.valid" type="submit">
+        Aceptar
+    </button>
+
+</div>
