@@ -37,7 +37,7 @@ export class CrearCarreraComponent {
     this.carreraS.registrarCarrera(dataCarrera).subscribe(datos => {
       this.CerrarRegistro()
 
-      this.toastr.success('Registro Existoso! ', 'Usuario y contraseña válidos', {
+      this.toastr.success('Registro Existoso! ', 'Se ha creado la carrera.', {
         timeOut: 6000,
       })
       this.router.navigate(['/listar-carreras']);

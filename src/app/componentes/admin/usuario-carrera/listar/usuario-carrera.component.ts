@@ -99,7 +99,7 @@ export class UsuarioCarreraComponent {
 
   CambiarEstado(usuario: any, estado: boolean) {
     this.usuarioS.activarDesactivarUsuario(usuario.idUsuario, estado).subscribe((res: any) => {
-      this.toastr.success('Cambio de estado Existoso! ' + usuario.nombres + ' ' + usuario.apellidos, '', {
+      this.toastr.success('Cambio de estado Existoso! ', '', {
         timeOut: 6000,
       })
       this.ListarInactivos()

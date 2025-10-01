@@ -150,7 +150,7 @@ export class NotificarPropuestaComponent {
         this.CerrarVentana()
         this.flowableS.notificarActualizacion();
 
-        this.toastr.success('Propuesta aprobada con éxito! ', '', {
+        this.toastr.success('Propuesta negada con éxito! ', '', {
           timeOut: 6000,
         })
 
